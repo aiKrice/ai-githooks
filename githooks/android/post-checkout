@@ -1,0 +1,5 @@
+#! /bin/bash
+
+echo "🔵 Post-checkout check: Refreshing githooks..."
+
+source ./configure
