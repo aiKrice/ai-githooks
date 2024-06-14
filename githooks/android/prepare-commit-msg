@@ -1,0 +1,27 @@
+#! /bin/zsh
+
+source "githooks/android/toolbox.sh"
+
+hook="Prepare-commit-msg check"
+progress "$hook"
+
+COMMIT_EDITMSG=$1
+commit_message=$(cat $COMMIT_EDITMSG)
+char_count=$(echo $commit_message | wc -m)
+
+if [ $char_count -le $minCharCommitSize ];then
+    exitWithMessage "You commit message must greater or equal $minCharCommitSize"
+fi
+
+if [[ "$commit_message" =~ $conventionnal_commit_pattern ]]; then
+  prefix="${match[1]}"
+  jira_id="${match[2]}"
+  param3="${match[3]}"
+  commit_text="${commit_message#${match[0]}}"
+  echo "Prefix: $prefix"
+  echo "JIRA ID: $jira_id"
+  echo "param3 $param3"
+  echo "Commit text: ${commit_message#"$prefix($jira_id): "}"
+else
+  echo "testfff" > $COMMIT_EDITMSG
+fi

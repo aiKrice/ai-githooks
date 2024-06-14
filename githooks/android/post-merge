@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/zsh
 
 echo "🔵 Post-checkout check: Refreshing githooks..."
 

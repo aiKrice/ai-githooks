@@ -14,6 +14,9 @@ reset='\e[0m'
 branchName=$(git rev-parse --abbrev-ref HEAD)
 stagedFiles=$(git diff --cached --name-only --diff-filter=d)
 stagedKotlinFiles=$(git diff --cached --name-only --diff-filter=d | grep -E '\.kt$|\.kts$')
+minCharCommitSize=5
+conventionnal_commit_pattern='^(chore|ci|docs|feat|fix|perf|refactor|style|test)\(((APPS|BUG)\-[0-9]+)\): [A-Za-z0-9\-_ ]{6,}$'
+branch_patter='^(chore|ci|docs|feat|fix|perf|refactor|style|test)\/((APPS|BUG)\-[0-9]+)_[A-Za-z0-9\-_]{6,}$'
 
 #function utils
 function progress() {
