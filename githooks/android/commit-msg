@@ -1,0 +1,9 @@
+#! /bin/zsh
+
+source "githooks/android/toolbox.sh"
+
+hook="Commit-msg check"
+progress "$hook"
+
+echo "Chris"
+echo $1
