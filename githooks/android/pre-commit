@@ -12,6 +12,8 @@ if [ ! -z "$stagedKotlinFiles" ]; then
     ktlint -F $stagedKotlinFiles
     if [ $? -eq 0 ]; then
         printSuccess "Autoreformatting done"
+        # we added changes if success (you can also add them in the autoformatting step)
+        git add .
     else 
         showFailureNotification "Autoreformatter" "failed: $?"
         exitWithMessage "Ktlint failed"
@@ -25,6 +27,7 @@ if [ ! -z "$stagedKotlinFiles" ]; then
         showFailureNotification "Detekt failed" "failed: $?"
         exitWithMessage "Detekt failed"
     fi
+    #You can also git add . if you linter autocorrect
 
     progress "AndroidLint in progress..."
     ./gradlew lint #implies that you define lint {} in your build{.gradle|.kts}
@@ -35,9 +38,7 @@ if [ ! -z "$stagedKotlinFiles" ]; then
         exitWithMessage "AndroidLint failed"
     fi
 
-    # we added changes if success (you can also add them in the autoformatting step)
-    git add .
-
+    success "Code sanitized with success"
 else 
     printWarning "No kotlin files staged, checks skipped"
 fi
