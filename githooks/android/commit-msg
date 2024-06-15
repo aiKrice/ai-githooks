@@ -5,5 +5,9 @@ source "githooks/android/toolbox.sh"
 hook="Commit-msg check"
 progress "$hook"
 
-echo "Chris"
-echo $1
+if [[ "$commit_message" =~ $conventionnal_commit_pattern ]]; then
+    exitWithMessage "$hook failed because it doesn't match to your convention"
+else 
+    printSuccess "$hook" "Commit successfully created"
+    showSuccessNotification
+fi 
