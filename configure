@@ -10,6 +10,7 @@ echo "Refreshing the Gitconfig" #bonus, nothing related to githooks, for team al
 git config --local include.path ../.gitconfig
 
 echo "Installating toolings for the githooks"
+cd githooks/android/
 HOMEBREW_NO_AUTO_UPDATE=1 brew bundle
-
+cd ../../
 source ~/.zshrc #refresh your $PATH etc.

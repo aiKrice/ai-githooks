@@ -9,19 +9,19 @@ COMMIT_EDITMSG=$1
 commit_message=$(cat $COMMIT_EDITMSG)
 char_count=$(echo $commit_message | wc -m)
 
-if [ $char_count -le $minCharCommitSize ];then
-    exitWithMessage "You commit message must greater or equal $minCharCommitSize"
+#check min char in commit text
+if [ $char_count -le $min_char_commit_size ];then
+    exitWithMessage "You commit message must greater or equal $min_char_commit_size"
 fi
 
-if [[ "$commit_message" =~ $conventionnal_commit_pattern ]]; then
-  prefix="${match[1]}"
-  jira_id="${match[2]}"
-  param3="${match[3]}"
-  commit_text="${commit_message#${match[0]}}"
-  echo "Prefix: $prefix"
-  echo "JIRA ID: $jira_id"
-  echo "param3 $param3"
-  echo "Commit text: ${commit_message#"$prefix($jira_id): "}"
-else
-  echo "testfff" > $COMMIT_EDITMSG
+#from feat/hooks-12345_branch_name to feat(hooks-12345): commit message
+
+if ! [[ "$commit_message" =~ $conventionnal_commit_pattern ]]; then #git commit --amend --no-edit
+    prefix=$(echo "$branchName" | sed -nE 's/^(chore|ci|docs|feat|fix|perf|refactor|style|test)\/.*$/\1/p')
+    scope=$(echo "$branchName" | sed -nE 's/^[a-z]+\/((hooks)-[0-9]+)_[A-Za-z0-9\-_]{6,}$/\1/p')
+    if [[ "$commit_message" =~ "^# Please enter the commit" ]]; then #git commit
+        echo "$prefix($scope):" > $COMMIT_EDITMSG
+    else # git commit --amend / git commit -m
+        echo "$prefix($scope): $commit_message" > $COMMIT_EDITMSG
+    fi
 fi
