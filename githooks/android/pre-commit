@@ -6,7 +6,7 @@ hook="Pre-commit check"
 progress "$hook"
 
 if [ ! -z "$stagedKotlinFiles" ]; then
-#run autoformatter
+    #run autoformatter
     progress "Autoreformatting the code..."
 
     ktlint -F $stagedKotlinFiles
@@ -19,6 +19,7 @@ if [ ! -z "$stagedKotlinFiles" ]; then
         exitWithMessage "Ktlint failed"
     fi
 
+    #Run linter
     progress "Detekt lint in pogress..."
     detekt -b config/linters/detekt/baseline.xml -c config/linters/detekt/detekt.yml -i $stagedKotlinFiles
     if [ $? -eq 0 ]; then
@@ -29,6 +30,7 @@ if [ ! -z "$stagedKotlinFiles" ]; then
     fi
     #You can also git add . if you linter autocorrect
 
+    #Run Androidlinter
     progress "AndroidLint in progress..."
     ./gradlew lint #implies that you define lint {} in your build{.gradle|.kts}
     if [ $? -eq 0 ]; then
