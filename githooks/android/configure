@@ -8,6 +8,7 @@ chmod u+x post-merge
 chmod u+x pre-commit
 chmod u+x prepare-commit-msg
 chmod u+x commit-msg
+chmod u+x pre-push
 
 echo "Refreshing the Gitconfig" #bonus, nothing related to githooks, for team aliases
 git config --local include.path ../.gitconfig
