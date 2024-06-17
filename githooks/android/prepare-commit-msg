@@ -14,6 +14,11 @@ if [ $char_count -le $min_char_commit_size ];then
     exitWithMessage "You commit message must greater or equal $min_char_commit_size"
 fi
 
+# Check if the branch follow the pattern
+if ! [[ "$branchName" =~ $branch_pattern ]]; then
+    exitWithMessage "You branch does't respect the choosen pattern"
+fi
+
 # This part will read the COMMIT_EDITMSG file and will prepare by editing it with a convention
 # Feel free to change the implementation here to adapt to your convention
 # This code describe a conventionnal commit lint and will prefix the text accordingly to this convention

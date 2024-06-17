@@ -2,23 +2,8 @@
 
 characters=""
 
-# Loop to read characters one by one until Enter is pressed
-while true; do
-    # Read a character without newline
-    character=$'(zle -R -K)'
-
-    # Check if Enter key is pressed
-    if [[ $character == $'\n' ]]; then
-        # Display "super" after clearing the current line
-        echo -ne "\r\033[Ksuper"
-
-        # Exit the loop
-        break
-    else
-        # Append the read character to the "characters" variable
-        characters+=$character
-
-        # Display the typed characters so far
-        echo -ne "\r$characters"
-    fi
-done
+# Ask confirmation to continue release process
+read -k "confirmation?Do you want to launch the UnitTests? (Enter y/yes):"
+if [[ $confirmation =~ ^(y|yes)$ ]]; then
+    echo "Yes!"
+fi
